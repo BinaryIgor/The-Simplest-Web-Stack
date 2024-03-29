@@ -1,0 +1,20 @@
+# Maven
+log/
+target/
+# Intellij
+.idea/
+*.iml
+.classpath
+.project
+.settings
+
+# Scripts
+.env
+deploy/
+
+# Python
+**/__pycache__/
+**/venv/
+
+# JS
+node_modules/
