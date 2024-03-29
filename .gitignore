@@ -10,7 +10,8 @@ target/
 
 # Scripts
 .env
-deploy/
+**/deploy/
+**/dist
 
 # Python
 **/__pycache__/
