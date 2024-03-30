@@ -1,8 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
+cwd=$PWD
+cd ../config
+source "$ENV.env"
+cd $cwd
+
 app=$APP
-deploy_user="deploy"
+deploy_user=$DEPLOY_USER
 remote_host="$deploy_user@$DEPLOY_HOST"
 deploy_dir="/home/$deploy_user/deploy/$app"
 previous_deploy_dir="$deploy_dir/previous"

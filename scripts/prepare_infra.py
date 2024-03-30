@@ -33,7 +33,6 @@ MACHINE_USER = "deploy"
 
 DIGITAL_OCEAN_API_URL = "https://api.digitalocean.com/v2"
 
-
 def print_and_exit(message):
     print(message)
     sys.exit(1)
