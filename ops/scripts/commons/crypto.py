@@ -15,6 +15,8 @@ KEY_BYTES_LENGTH = 32
 PASSWORD_LENGTH = 48
 PASSWORD_CHARACTERS = f'{string.ascii_letters}{string.digits}'
 
+META_KEY = "__meta__"
+
 
 def random_key():
     return base64.b64encode(os.urandom(KEY_BYTES_LENGTH)).decode("ascii")
@@ -34,7 +36,7 @@ def modify_secret(key, value=None, encryption_password=None):
         decrypted_file = {}
 
     decrypted_file = {
-        "__meta__": {
+        META_KEY: {
             "modified_at": datetime.now().isoformat()
         }
     }
@@ -85,9 +87,15 @@ def decrypted_data(data, password=None):
     return Fernet(key).decrypt(data)
 
 
-def decrypted_secrets():
+def decrypted_secrets(show_meta=False):
     decrypted = decrypted_data(meta.file_content(secrets_file_path()))
-    return json.loads(decrypted)
+    
+    decrypted_json = json.loads(decrypted)
+    
+    if not show_meta:
+        decrypted_json.pop(META_KEY, None)
+
+    return decrypted_json
 
 
 def _given_or_from_input_password(password):
