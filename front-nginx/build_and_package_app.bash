@@ -12,10 +12,6 @@ rm -r -f dist
 mkdir dist
 mkdir dist/conf
 
-cwd=$PWD
-cd "../config"
-source "$ENV.env"
-cd $cwd
 source "config_${ENV}.env"
 
 export HTTP_PORT=${HTTP_PORT:-80}

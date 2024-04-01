@@ -29,7 +29,7 @@ export tag=$tag
 export run_cmd="docker run -d --network host ${volume} --restart unless-stopped --name $app $tagged_image"
 
 cd ..
-envsubst '${app} ${tag}' < scripts/template_load_and_run_app.bash > $app/dist/load_and_run_app.bash
-envsubst '${app} ${run_cmd}' < scripts/template_run_app.bash > $app/dist/run_app.bash
+envsubst '${app} ${tag}' < $LOAD_AND_RUN_APP_TEMPLATE_PATH > $app/dist/load_and_run_app.bash
+envsubst '${app} ${run_cmd}' < $RUN_APP_TEMPLATE_PATH > $app/dist/run_app.bash
 
 echo "Package prepared."

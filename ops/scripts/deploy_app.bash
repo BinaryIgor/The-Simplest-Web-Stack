@@ -2,7 +2,7 @@
 set -euo pipefail
 
 cwd=$PWD
-cd ../config
+cd ../../config
 source "$ENV.env"
 cd $cwd
 

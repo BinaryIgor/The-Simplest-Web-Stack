@@ -1,4 +1,4 @@
-# Scripts to automate operations
+# Automation of all kinds of operations
 
 ## Setup env
 ```

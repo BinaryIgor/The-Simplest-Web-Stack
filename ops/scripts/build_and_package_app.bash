@@ -6,6 +6,11 @@ export ENV="${ENV:-local}"
 
 echo "Building $app with ${ENV} env profile..."
 
-cd ..
+cwd=$PWD
+cd "../../config"
+source global.env
+cd $cwd
+
+cd ../..
 cd $app
 bash build_and_package_app.bash
