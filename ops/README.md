@@ -3,7 +3,7 @@
 ## Setup env
 ```
 cd scripts
-bash setup_scripts_env.bash
+bash set_up_scripts_env.bash
 ```
 
 This will create virtual Python environment and install required dependencies (mostly requests for making http requests).

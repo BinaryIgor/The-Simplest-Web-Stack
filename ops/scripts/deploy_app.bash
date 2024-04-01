@@ -3,12 +3,12 @@ set -euo pipefail
 
 cwd=$PWD
 cd ../../config
-source "$ENV.env"
+source "global.env"
 cd $cwd
 
 app=$APP
 deploy_user=$DEPLOY_USER
-remote_host="$deploy_user@$DEPLOY_HOST"
+remote_host=$REMOTE_HOST
 deploy_dir="/home/$deploy_user/deploy/$app"
 previous_deploy_dir="$deploy_dir/previous"
 latest_deploy_dir="$deploy_dir/latest"
@@ -22,7 +22,7 @@ ssh ${remote_host} "rm -r -f $previous_deploy_dir;
 echo
 echo "Dirs prepared, copying package, this can take a while..."
 
-cd ..
+cd ../..
 scp -r $app/dist/* ${remote_host}:${latest_deploy_dir}
 
 echo

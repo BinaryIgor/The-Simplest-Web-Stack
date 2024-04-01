@@ -35,11 +35,7 @@ def modify_secret(key, value=None, encryption_password=None):
     else:
         decrypted_file = {}
 
-    decrypted_file = {
-        META_KEY: {
-            "modified_at": datetime.now().isoformat()
-        }
-    }
+    decrypted_file[META_KEY] =  { "modified_at": datetime.now().isoformat() }
         
     if value is None:
         decrypted_file.pop(key, None)
