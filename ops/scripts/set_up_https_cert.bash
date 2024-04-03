@@ -22,10 +22,10 @@ cd ../../config
 
 cd $cwd
 
-skip_https_server_setup="${SKIP_HTTPS_SERVER_SETUP:-true}"
+skip_https_server_setup="${SKIP_HTTPS_SERVER_SETUP:-false}"
 set_https_server_app="set-https-nginx"
 
-if [ $skip_https_server_setup == "false" ]; then;
+if [ $skip_https_server_setup = "false" ]; then
     export APP="tools/$set_https_server_app"
     echo "Building and deploying $set_https_server_app server..."
     bash build_and_package_app.bash

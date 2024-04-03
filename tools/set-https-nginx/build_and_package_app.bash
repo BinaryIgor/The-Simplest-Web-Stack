@@ -30,10 +30,10 @@ echo "Image exported, preparing scripts..."
 
 export app=$app
 export tag=$tag
-export run_cmd="docker run -d -v ${STATIC_PATH}://usr/share/nginx/site --restart unless-stopped --name $app $tagged_image"
+export run_cmd="docker run -d -v ${STATIC_PATH}:/usr/share/nginx/site --name $app $tagged_image"
 
 cd ../..
-envsubst '${app} ${tag}' < scripts/template_load_and_run_app.bash > tools/$app/dist/load_and_run_app.bash
-envsubst '${app} ${run_cmd}' < scripts/template_run_app.bash > tools/$app/dist/run_app.bash
+envsubst '${app} ${tag}' < $LOAD_AND_RUN_APP_TEMPLATE_PATH > tools/$app/dist/load_and_run_app.bash
+envsubst '${app} ${run_cmd}' < $RUN_APP_TEMPLATE_PATH > tools/$app/dist/run_app.bash
 
 echo "Package prepared."
