@@ -12,7 +12,7 @@ VOLUMES_RESOURCE = "volumes"
 ID = "id"
 NAME = "name"
 
-SSH_KEY_FINGERPRINTS = []
+SSH_KEY_FINGERPRINTS = ["a0:3a:d4:d8:52:4a:8b:34:50:fd:20:c7:19:a1:8a:b4"]
 
 # Customize this params for your needs
 # full machine slugs reference: https://slugs.do-api.dev/
@@ -47,7 +47,7 @@ if len(SSH_KEY_FINGERPRINTS) == 0:
 AUTH_HEADER = {"Authorization": f"Bearer {API_TOKEN}"}
 
 with open("init_machine.bash") as f:
-    INIT_MACHINE = f.read().replace(USER_PLACEHOLDER, "single-machine")
+    INIT_MACHINE = f.read().replace(USER_PLACEHOLDER, MACHINE_USER)
 
 
 # To debug user data, run:

@@ -12,7 +12,7 @@ rm -r -f dist
 mkdir dist
 mkdir dist/conf
 
-source "config_${ENV}.env"
+. "config_${ENV}.env"
 
 export HTTP_PORT=${HTTP_PORT:-80}
 export HTTPS_PORT=${HTTPS_PORT:-443}
@@ -71,7 +71,7 @@ docker run -d --network host \\
 bash check_proxied_app.bash"
 
 cd ..
-envsubst '${app} ${tag}' < scripts/template_load_and_run_app.bash > $app/dist/load_and_run_app.bash
-envsubst '${app} ${run_cmd}' < scripts/template_run_app.bash > $app/dist/run_app.bash
+envsubst '${app} ${tag}' < $LOAD_AND_RUN_APP_TEMPLATE_PATH > $app/dist/load_and_run_app.bash
+envsubst '${app} ${run_cmd}' < $RUN_APP_TEMPLATE_PATH > $app/dist/run_app.bash
 
 echo "Package prepared."

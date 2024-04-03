@@ -30,7 +30,7 @@ echo "Image exported, preparing scripts..."
 
 export app=$app
 export tag=$tag
-export run_cmd="docker run -d -v ${STATIC_PATH}:/usr/share/nginx/site --name $app $tagged_image"
+export run_cmd="docker run -d --network host -v ${STATIC_PATH}:/usr/share/nginx/site --name $app $tagged_image"
 
 cd ../..
 envsubst '${app} ${tag}' < $LOAD_AND_RUN_APP_TEMPLATE_PATH > tools/$app/dist/load_and_run_app.bash

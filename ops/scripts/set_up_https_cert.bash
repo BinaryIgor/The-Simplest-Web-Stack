@@ -26,7 +26,8 @@ skip_https_server_setup="${SKIP_HTTPS_SERVER_SETUP:-false}"
 set_https_server_app="set-https-nginx"
 
 if [ $skip_https_server_setup = "false" ]; then
-    export APP="tools/$set_https_server_app"
+    export APP="$set_https_server_app"
+    export APP_DIR="tools/$APP"
     echo "Building and deploying $set_https_server_app server..."
     bash build_and_package_app.bash
     echo
@@ -51,7 +52,6 @@ echo
 echo "Certbot configured, generating certs..."
 sudo certbot certonly --webroot --webroot-path "${webroot_path}" --domains "${DOMAIN}" \
     --non-interactive --email ${DOMAINS_EMAIL} --agree-tos -v"
-"
 
 echo
 echo "Certbot set, stopping ${set_https_server_app}..."
