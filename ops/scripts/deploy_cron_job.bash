@@ -3,16 +3,17 @@ set -euo pipefail
 
 cwd=$PWD
 cd ../../config
-source "global.env"
+. "global.env"
 cd $cwd
 
 app=$APP
+app_dir="${APP_DIR:-$APP}"
 deploy_user=$DEPLOY_USER
 remote_host=$REMOTE_HOST
 deploy_dir="/home/$deploy_user/deploy/$app"
 previous_deploy_dir="$deploy_dir/previous"
 latest_deploy_dir="$deploy_dir/latest"
-crontab_path="/home/$deploy_user/crontab.txt
+crontab_path="/home/$deploy_user/crontab.txt"
 
 echo "Deploying $app to a $remote_host host, preparing deploy directories.."
 
@@ -24,7 +25,7 @@ echo
 echo "Dirs prepared, copying package, this can take a while..."
 
 cd ../..
-scp -r $app/dist/* ${remote_host}:${latest_deploy_dir}
+scp -r $app_dir/dist/* ${remote_host}:${latest_deploy_dir}
 
 echo
 echo "Package copied, loading and creating app, this can take a while.."

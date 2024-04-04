@@ -1,19 +1,19 @@
 import psycopg2
 
-from . import meta, crypto
+from . import crypto
 
-def root_connection(root_user=None, root_password=None, db_name=None, db_host=None, db_port=None):
-    if root_user is None:
-        root_user = "postgres"
+def connection(user=None, password=None, db_name=None, db_host=None, db_port=None):
+    if user is None:
+        user = "postgres"
 
-    if root_password is None:
-        root_password = crypto.decrypted_secrets("db-root-password")
+    if password is None:
+        password = crypto.decrypted_secrets("db-root-password")
 
     conn = psycopg2.connect(host=db_host,
                             port=db_port,
                             dbname=db_name if db_name else "postgres",
-                            user=root_user,
-                            password=root_password,
+                            user=user,
+                            password=password,
                             connect_timeout=3)
 
     conn.autocommit = True

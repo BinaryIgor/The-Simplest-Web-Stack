@@ -20,10 +20,10 @@ connect_trials = 5
 for i in range(connect_trials):
     try:
         try:
-            conn = db.root_connection(ROOT_USER, INITIAL_ROOT_PASSWORD, db_host=db_host, db_port=db_port)
+            conn = db.connection(ROOT_USER, INITIAL_ROOT_PASSWORD, db_host=db_host, db_port=db_port)
         except Exception:
             print("Failed to use initial root password, will use next one instead")
-            conn = db.root_connection(ROOT_USER, root_password)
+            conn = db.connection(ROOT_USER, root_password)
             break
     except Exception:
         should_retry = (i + 1) < connect_trials
@@ -49,7 +49,7 @@ root_password = secrets['db-root-password']
 db.alter_user_password(cur, ROOT_USER, root_password)
 
 print("Granting db rights...")
-db_conn = db.root_connection(ROOT_USER, root_password, db_name=db_name, db_host=db_host, db_port=db_port)
+db_conn = db.connection(ROOT_USER, root_password, db_name=db_name, db_host=db_host, db_port=db_port)
 
 cur = db_conn.cursor()
 
