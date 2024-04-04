@@ -6,7 +6,7 @@ tag="${TAG:-latest}"
 tagged_image="${app}:${tag}"
 
 if [ $ENV = 'prod' ]; then
-    docker_restart="unless-stoped"
+    docker_restart="unless-stopped"
     volume="-v /mnt/db_volume/data:/var/lib/postgresql/data"
 else
     docker_restart="no"

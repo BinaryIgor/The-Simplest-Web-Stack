@@ -1,12 +1,12 @@
 #!/bin/bash
-
 cwd=$PWD
-cd ../../../config
+cd ../../config
 . global.env
+. prod.env
 cd $cwd
 
 export LOCAL_PORT=5432
-export LOCAL_PORT=5432
+export REMOTE_PORT=5432
 
 echo "Tunneling postgres on a port: $LOCAL_PORT!"
 
