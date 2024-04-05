@@ -18,3 +18,12 @@ export MAX_BACKUPS=10
 export BACKUPS_PATH="/backups"
 
 python3 remove_old_backups.py
+
+if [ "${UPLOAD_TO_DO_SPACES:-false}" = "true" ]; then
+  echo "Uploading backup to DO spaces..."
+  export BACKUP_LOCAL_PATH=$backup_path
+  export BACKUP_NAME=$backup_name
+  python3 upload_backups_to_do_spaces.py
+else
+  echo "Skipping backup to DO spaces upload"
+fi

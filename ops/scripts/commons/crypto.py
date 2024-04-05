@@ -9,7 +9,8 @@ from datetime import datetime
 
 from . import meta
 
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, InvalidToken
+from cryptography.exceptions import InvalidSignature
 
 KEY_BYTES_LENGTH = 32
 PASSWORD_LENGTH = 48
@@ -80,7 +81,10 @@ def _password_to_fernet_key(password):
 def decrypted_data(data, password=None):
     password = _given_or_from_input_password(password)
     key = _password_to_fernet_key(password)
-    return Fernet(key).decrypt(data)
+    try:
+        return Fernet(key).decrypt(data)
+    except (InvalidSignature, InvalidToken):
+        raise Exception("Invalid decrypt password!")
 
 
 def decrypted_secrets(show_meta=False):
@@ -92,6 +96,14 @@ def decrypted_secrets(show_meta=False):
         decrypted_json.pop(META_KEY, None)
 
     return decrypted_json
+
+
+def reencrypt_secrets(old_password, new_password):
+    decrypted = decrypted_data(meta.file_content(secrets_file_path()), old_password)
+    
+    encrypted = encrypted_data(decrypted, new_password)
+
+    meta.write_binary_to_file(secrets_file_path(), encrypted)
 
 
 def _given_or_from_input_password(password):
