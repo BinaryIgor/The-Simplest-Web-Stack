@@ -1,23 +1,30 @@
 #!/bin/bash
 set -euo pipefail
 
-app="db"
-tag="${TAG:-latest}"
-tagged_image="${app}:${tag}"
+app=$APP
+app_dir="${APP_DIR:-$APP}"
+export ENV="${ENV:-local}"
 
-if [ $ENV = 'prod' ]; then
-    docker_restart="unless-stopped"
-    volume="-v /mnt/db_volume/data:/var/lib/postgresql/data"
-else
-    docker_restart="no"
-    volume="-v /tmp/${APP_NAME}_volume:/var/lib/postgresql/data"
-fi
+echo "Building $app with ${ENV} env profile..."
 
-echo "Creating package in dist directory for $tagged_image image..."
-echo "Preparing dist dir..."
+cwd=$PWD
+cd "../../config"
+. global.env
+. ${ENV}.env
+cd $cwd
+
+cd ../..
+cd $app_dir
 
 rm -r -f dist
 mkdir dist
+
+echo "Running package cmd..."
+
+. package_cmd.bash
+
+tag="${TAG:-latest}"
+tagged_image="${app}:${tag}"
 
 echo "Building image..."
 
@@ -33,9 +40,12 @@ echo "Image exported, preparing scripts..."
 
 export app=$app
 export tag=$tag
-export run_cmd="docker run -d --network host ${volume} --restart ${docker_restart} --name $app $tagged_image"
+export run_cmd="
+${PRE_DOCKER_RUN_CMD:-}
+docker run -d ${DOCKER_RUN_PARAMS} --name $app $tagged_image
+${POST_DOCKER_RUN_CMD:-}"
 
-cd ..
+cd $ROOT_REPO_DIR
 envsubst '${app} ${tag}' < $LOAD_AND_RUN_APP_TEMPLATE_PATH > $app/dist/load_and_run_app.bash
 envsubst '${app} ${run_cmd}' < $RUN_APP_TEMPLATE_PATH > $app/dist/run_app.bash
 

@@ -59,19 +59,13 @@ else
     pre_run_action=""
 fi
 
-export run_cmd="$pre_run_action
-bash update_app_url_pre_start.bash $APP_URL_FILE_PATH
+export PRE_DOCKER_RUN_CMD="$pre_run_action
+bash update_app_url_pre_start.bash $APP_URL_FILE_PATH"
 
-docker run -d --network host \\
+export DOCKER_RUN_PARAMS="--network host \\
     -v ${CONFIG_VOLUME} \\
     ${CERTS_VOLUME} \\
     -v ${STATIC_RESOURCES_VOLUME} \\
-    --restart ${DOCKER_RESTART} --name $app $tagged_image
+    --restart ${DOCKER_RESTART}"
     
-bash check_proxied_app.bash"
-
-cd ..
-envsubst '${app} ${tag}' < $LOAD_AND_RUN_APP_TEMPLATE_PATH > $app/dist/load_and_run_app.bash
-envsubst '${app} ${run_cmd}' < $RUN_APP_TEMPLATE_PATH > $app/dist/run_app.bash
-
-echo "Package prepared."
+export POST_DOCKER_RUN_CMD="bash check_proxied_app.bash"
