@@ -23,8 +23,11 @@ cp -r $latest_deploy_dir $previous_deploy_dir;"
 echo
 echo "Dirs prepared, copying package, this can take a while..."
 
+
+cwd=$PWD
 cd ../..
 scp -r $app_dir/dist/* ${remote_host}:${latest_deploy_dir}
+cd $cwd
 
 echo
 echo "Package copied, loading and creating app, this can take a while.."

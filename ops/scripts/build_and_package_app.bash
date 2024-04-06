@@ -40,8 +40,7 @@ echo "Image exported, preparing scripts..."
 
 export app=$app
 export tag=$tag
-export run_cmd="
-${PRE_DOCKER_RUN_CMD:-}
+export run_cmd="${PRE_DOCKER_RUN_CMD:-}
 docker run -d ${DOCKER_RUN_PARAMS} --name $app $tagged_image
 ${POST_DOCKER_RUN_CMD:-}"
 

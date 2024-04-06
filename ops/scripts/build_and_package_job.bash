@@ -40,8 +40,7 @@ echo "Image exported, preparing scripts..."
 
 export app=$app
 export tag=$tag
-export create_cmd="
-${PRE_DOCKER_CREATE_CMD:-}
+export create_cmd="${PRE_DOCKER_CREATE_CMD:-}
 docker create ${DOCKER_CREATE_PARAMS} --name $app $tagged_image
 ${POST_DOCKER_CREATE_CMD:-}"
 

@@ -1,6 +1,9 @@
 #!/bin/sh
 set -eu
 
+started_at=$(date +%s)
+echo $started_at > "/job-metrics/db-backup__last-started-at.txt"
+
 db_user=$DB_USER
 db_name=$DB_NAME
 backup_date=$(date '+%Y%m%d_%H%M%S')
@@ -27,3 +30,6 @@ if [ "${UPLOAD_TO_DO_SPACES:-false}" = "true" ]; then
 else
   echo "Skipping backup to DO spaces upload"
 fi
+
+ended_at=$(date +%s)
+echo $ended_at > "/job-metrics/db-backup__last-ended-at.txt"
