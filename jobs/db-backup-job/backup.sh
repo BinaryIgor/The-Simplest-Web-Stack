@@ -26,7 +26,7 @@ if [ "${UPLOAD_TO_DO_SPACES:-false}" = "true" ]; then
   echo "Uploading backup to DO spaces..."
   export BACKUP_LOCAL_PATH=$backup_path
   export BACKUP_NAME=$backup_name
-  python3 upload_backups_to_do_spaces.py
+  python3 upload_backup_to_do_spaces.py
 else
   echo "Skipping backup to DO spaces upload"
 fi
