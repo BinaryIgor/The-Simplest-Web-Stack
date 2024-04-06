@@ -7,9 +7,9 @@ if len(sys.argv) < 2:
 secret_name = sys.argv[1]
 print(f"About to store {secret_name} secret...")
 
-if len(sys.argv) >= 3:
-    secret_value = sys.argv[2]
-else:
+secret_value = crypto.secret_input("Secret value (leave empty, if you want random): ")
+
+if not secret_value:
     print("Secret value not given, generating it...")
     if "password" in secret_name:
         secret_value = crypto.random_password()
