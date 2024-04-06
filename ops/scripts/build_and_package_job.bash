@@ -2,7 +2,7 @@
 set -euo pipefail
 
 app=$JOB
-app_dir="${APP_DIR:-$JOB_DIR}"
+app_dir="${JOB_DIR:-jobs/$JOB}"
 export ENV="${ENV:-local}"
 
 echo "Building $app with ${ENV} env profile..."
