@@ -1,15 +1,15 @@
 #!/bin/sh
-set -eu
+set -u
 
 db_user=$DB_USER
 db_name=$DB_NAME
 backup_path="/backups/backup_restore.back"
 
-echo "$(date): restoring ${db_name} db of ${db_user} user from ${backup_path} file..."
+echo "$(date -Iseconds): restoring ${db_name} db with ${db_user} user from ${backup_path} file..."
 echo
 
-# Compressed, custom dump format. For details, check out the docs: https://www.postgresql.org/docs/current/app-pgdump.html
-pg_restore -Fc -h "0.0.0.0" -U $db_user -d $db_name -v "$backup_path"
+# Assuming compressed, custom dump format. For details, check out the docs: https://www.postgresql.org/docs/current/app-pgrestore.html
+pg_restore -v -Fc -h "0.0.0.0" -U $db_user -d $db_name "$backup_path"
 
 echo
-echo "$(date): db restored!"
+echo "$(date -Iseconds): db restored!"
