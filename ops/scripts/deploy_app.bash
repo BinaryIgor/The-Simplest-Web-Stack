@@ -10,7 +10,7 @@ app=$APP
 app_dir="${APP_DIR:-$APP}"
 deploy_user=$DEPLOY_USER
 remote_host=$REMOTE_HOST
-deploy_dir="/home/$deploy_user/deploy/$app"
+deploy_dir="$DEPLOY_DIR/$app"
 previous_deploy_dir="$deploy_dir/previous"
 latest_deploy_dir="$deploy_dir/latest"
 

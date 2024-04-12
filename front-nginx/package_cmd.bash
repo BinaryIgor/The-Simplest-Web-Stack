@@ -18,8 +18,6 @@ export HTTP_PORT=${HTTP_PORT:-80}
 export HTTPS_PORT=${HTTPS_PORT:-443}
 export APP_URL="${APP_URL:-http://0.0.0.0:9999}"
 
-echo "DOMAIN: $DOMAIN"
-
 envsubst '${HTTP_PORT} ${HTTPS_PORT} ${DOMAIN} ${APP_URL}' < template_nginx.conf > dist/conf/default.conf
 envsubst '${HTTP_PORT} ${HTTPS_PORT} ${DOMAIN}' < template_nginx.conf > dist/template_nginx_app.conf
 

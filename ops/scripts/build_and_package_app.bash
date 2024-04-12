@@ -23,6 +23,8 @@ echo "Running package cmd..."
 
 . package_cmd.bash
 
+zero_downtime_deploy=${ZERO_DOWNTIME_DEPLOY:-false}
+
 tag="${TAG:-latest}"
 tagged_image="${app}:${tag}"
 
@@ -46,6 +48,14 @@ ${POST_DOCKER_RUN_CMD:-}"
 
 cd $ROOT_REPO_DIR
 envsubst '${app} ${tag}' < $LOAD_AND_RUN_APP_TEMPLATE_PATH > $app/dist/load_and_run_app.bash
-envsubst '${app} ${run_cmd}' < $RUN_APP_TEMPLATE_PATH > $app/dist/run_app.bash
+
+if [ $zero_downtime_deploy == "true" ]; then
+  export upstream_nginx_dir=$UPSTREAM_NGINX_DIR
+  export app_url=$APP_URL
+  export app_health_check_url=$APP_HEALTH_CHECK_URL
+  envsubst '${app} ${run_cmd} ${app_health_check_url} ${upstream_nginx_dir} ${app_url}' < $RUN_ZERO_DOWNTIME_APP_TEMPLATE_PATH > $app/dist/run_app.bash
+else 
+  envsubst '${app} ${run_cmd}' < $RUN_APP_TEMPLATE_PATH > $app/dist/run_app.bash
+fi
 
 echo "Package prepared."
